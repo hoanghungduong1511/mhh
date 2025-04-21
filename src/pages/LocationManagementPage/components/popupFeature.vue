@@ -46,8 +46,20 @@ export default defineComponent({
     const $t = i18n.global.t;
     const computedRow = ref(props.row);
     const title = computed(() => {
-      return props.row.id ? `${$t('Update feature')}: ${unref(computedRow).name}`: `${$t('Add feature')}:`
-    })
+    const propsData = unref(computedRow)?.properties || {};
+    const displayName =
+      propsData.operator ||
+      propsData.name ||
+      propsData["official_name"] ||
+      propsData["@id"] ||
+      props.row.name ||  // fallback cuối
+      props.row.id;
+
+    return props.row.id
+      ? `${$t("Update feature")}: ${displayName}`
+      : `${$t("Add feature")}:`;
+  });
+
     const saveEdit = async (value, _props) => {
       const updateParams = {
         id: value.id,

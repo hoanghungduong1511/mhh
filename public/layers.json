@@ -1,104 +1,74 @@
 [
   {
-    "label": "Đà Nẵng",
+    "label": " Quầy ATM",
     "layer_index": 1,
-    "layer_color": "#40C224",
-    "value": "danang:dn_hn72"
+    "layer_color": "#FFA500",
+    "value": "MapDaNang:atm"
+  },
+  {
+    "label": "Chi Nhánh Ngân hàng",
+    "layer_index": 1,
+    "layer_color": "#0044CC",
+    "value": "MapDaNang:bank"
   },
   {
     "label": "Biển",
     "layer_index": 1,
     "layer_color": "#FFBA79",
-    "value": "danang:bien_utm"
+    "value": "MapDaNang:bien_utm"
+  },
+  {
+    "label": "Sông Cổ Cò",
+    "layer_index": 1,
+    "layer_color": "#7ED6DF",
+    "value": "MapDaNang:co_co__vn_"
   },
   {
     "label": "Sông Cẩm Lệ",
     "layer_index": 1,
     "layer_color": "#9F3D24",
-    "value": "danang:cam_le__vn_"
+    "value": "MapDaNang:diem_song"
   },
   {
-    "label": "Sông Đồng Nghệ",
+    "label": "Đà Nẵng",
     "layer_index": 1,
-    "layer_color": "#F852A4",
-    "value": "danang:dong_nghe__vn_"
+    "layer_color": "#40C224",
+    "value": "MapDaNang:dn_hn72"
   },
   {
     "label": "Giao thông",
     "layer_index": 1,
     "layer_color": "#7E28C7",
-    "value": "danang:giao_thong_utm"
+    "value": "MapDaNang:giao_thong_utm"
   },
   {
-    "label": "Hồ 3",
+    "label": "Hồ",
     "layer_index": 1,
     "layer_color": "#D696EC",
-    "value": "danang:ho3"
+    "value": "MapDaNang:ho"
   },
   {
-    "label": "Hồ 4",
+    "label": "Hành chính",
     "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:ho4"
+    "layer_color": "#27AE60",
+    "value": "MapDaNang:quan"
   },
   {
-    "label": "Hồ 5",
+    "label": "Địa hình",
     "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:ho5"
+    "layer_color": "#BDC3C7",
+    "value": "MapDaNang:polygon"
   },
   {
-    "label": "Hồ 6",
+    "label": "Tuyến đường phụ",
     "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:ho6"
+    "layer_color": "#95A5A6",
+    "value": "MapDaNang:polyline"
   },
   {
-    "label": "Hồ 7",
+    "label": "Suối",
     "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:ho7"
-  },
-  {
-    "label": "Hồ 8",
-    "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:ho8"
-  },
-  {
-    "label": "Hồ Cẩm Lệ",
-    "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:ho_cl"
-  },
-  {
-    "label": "Hồ Đồng Nghệ",
-    "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:ho_dong_nghe"
-  },
-  {
-    "label": "Hồ Hải Châu",
-    "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:ho_haichau"
-  },
-  {
-    "label": "Hồ Hòa Trung",
-    "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:ho_hoa_trung"
-  },
-  {
-    "label": "Sơ đồ đất",
-    "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:polygon"
-  },
-  {
-    "label": "Quận Huyện",
-    "layer_index": 1,
-    "layer_color": "#D696EC",
-    "value": "danang:quan-huyen"
+    "layer_color": "#3498DB",
+    "value": "MapDaNang:suoi_utm"
   }
 ]

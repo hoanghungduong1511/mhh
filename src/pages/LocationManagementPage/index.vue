@@ -37,9 +37,9 @@
           />
         </q-btn>
         <q-space />
-        <!-- <q-btn color="primary" icon="sync" @click="onSyncWorkspace">
+        <q-btn color="primary" icon="sync" @click="onSyncWorkspace">
           <q-tooltip>{{ $t('synchronized data from geoserver') }}</q-tooltip>
-        </q-btn> -->
+        </q-btn>
         <q-input :label="$t('Search for location')" debounce="300" color="primary" v-model="locationFilter" @update:model-value="getAll()">
           <template v-slot:append>
             <q-icon name="search" />
@@ -100,7 +100,7 @@
         <q-tr v-show="propsLocation.expand" :props="propsLocation">
           <q-td colspan="100%" v-if="propsLocation.expand">
             <!-- layer table -->
-            <TableLayer :props-location="propsLocation.row"/>
+            <TableLayer :props-location="propsLocation.row" :available-layers="layers" />
           </q-td>
         </q-tr>
       </template>
@@ -152,6 +152,24 @@ export default defineComponent({
     const vm = getCurrentInstance().proxy;
     const $q = useQuasar();
     const $t = i18n.global.t;
+    const layers = [
+  { id: 1, name: "ATM Rút tiền", url: "MapDaNang:atm", workspace: "MapDaNang", visible: true },
+  { id: 2, name: "Ngân hàng", url: "MapDaNang:bank", workspace: "MapDaNang", visible: true },
+  { id: 3, name: "Biển UTM", url: "MapDaNang:bien_utm", workspace: "MapDaNang", visible: false },
+  { id: 4, name: "Biển VN2000", url: "MapDaNang:bien_vn2000", workspace: "MapDaNang", visible: false },
+  { id: 5, name: "Sông Cổ Cò", url: "MapDaNang:co_co__vn_", workspace: "MapDaNang", visible: false },
+  { id: 6, name: "Suối", url: "MapDaNang:suoi_utm", workspace: "MapDaNang", visible: false },
+  { id: 7, name: "Giao thông UTM", url: "MapDaNang:giao_thong_utm", workspace: "MapDaNang", visible: false },
+  { id: 8, name: "Giao thông VN2000", url: "MapDaNang:giao_thong_vn2000", workspace: "MapDaNang", visible: false },
+  { id: 9, name: "Hồ", url: "MapDaNang:ho", workspace: "MapDaNang", visible: false },
+  { id: 10, name: "Điểm Sông", url: "MapDaNang:diem_song", workspace: "MapDaNang", visible: false },
+  { id: 11, name: "Ranh giới vùng", url: "MapDaNang:polygon", workspace: "MapDaNang", visible: false },
+  { id: 12, name: "Tuyến đường", url: "MapDaNang:polyline", workspace: "MapDaNang", visible: false },
+  { id: 13, name: "Quận", url: "MapDaNang:quan", workspace: "MapDaNang", visible: true },
+  { id: 14, name: "Quận Huyện", url: "MapDaNang:quan-huyen", workspace: "MapDaNang", visible: false },
+  { id: 15, name: "Đà Nẵng", url: "MapDaNang:dn_hn72", workspace: "MapDaNang", visible: false }
+];
+
     // deprecated for synchronize with command instead
     const onSyncWorkspace = async () => {
       await syncWorkspace({
@@ -331,6 +349,7 @@ export default defineComponent({
       projections,
       workspaces,
       onSyncWorkspace,
+      layers
     };
   },
 });

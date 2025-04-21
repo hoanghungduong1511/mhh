@@ -2,16 +2,10 @@
   <div class="q-pa-md">
     <q-table class="tableLayerClass" v-bind="{ ...tableProps, cardClass: 'bg-primary text-white' }" virtual-scroll
       style="max-height: 800px" :virtual-scroll-sticky-size-start="48" :columns="layerColumns"
-      :rows="propsLocation.mapLayers" v-model:pagination="layerPagination">
+      :rows="filteredLayers" v-model:pagination="layerPagination">
       <!-- layer header -->
       <template v-slot:top>
         <div class="text-h6 text-white">{{ $t("Layers") }}</div>
-        <!-- <q-btn class="bg-white text-primary" rounded icon="add" style="margin-left: 10px">
-          <q-tooltip anchor="center right" self="center start">{{
-            $t("Add layer")
-          }}</q-tooltip>
-          <popupLayer v-model:row="newLayer" :layer-rows="propsLocation?.mapLayers" :location="propsLocation" />
-        </q-btn> -->
         <q-space />
         <q-input :label="$t('Search for layer')" debounce="300" class="bg-white" color="black" v-model="layerFilter" @update:model-value="getLayerRows">
           <template v-slot:append>
@@ -56,7 +50,6 @@
               textColor: 'primary',
               icon: 'edit',
             }" style="margin-right: 10px">
-              <!-- popup layer edit -->
               <popupLayer v-model:row="propsLayer.row" :layer-rows="propsLocation?.mapLayers" />
             </q-btn>
             <q-btn v-bind="{
@@ -70,13 +63,11 @@
         </q-tr>
         <q-tr v-show="propsLayer.expand" :props="propsLayer">
           <q-td colspan="100%" v-if="propsLayer.expand">
-            <!-- feature table -->
             <TableFeature :props-layer="propsLayer.row" />
           </q-td>
         </q-tr>
       </template>
     </q-table>
-    <!-- layer pagination -->
     <q-pagination input style="place-content: center" v-model="layerPagination.page" @update:model-value="getLayerRows"
       :max="layerPagination.rowsNumber" boundary-numbers direction-links flat color="grey" active-color="primary" />
   </div>
@@ -95,8 +86,6 @@ import { useQuasar } from "quasar";
 import { i18n } from "boot/i18n.js";
 import { LAYER_TYPE } from "src/constants/enum";
 import { getLayerByLocation, deleteMapLayer } from "src/api/mapLayer";
-import { getFeaturesByLayer } from "src/api/feature";
-import { getAllProjection } from "src/api/projection";
 import PopupLayer from "src/pages/LocationManagementPage/components/popupLayer.vue";
 import TableFeature from "src/pages/LocationManagementPage/components/tableFeature.vue";
 
@@ -108,6 +97,7 @@ export default defineComponent({
   },
   props: {
     propsLocation: Object,
+    availableLayers: Array,
   },
   setup(props) {
     const vm = getCurrentInstance().proxy;
@@ -180,6 +170,18 @@ export default defineComponent({
       rowsPerPage: 10,
       rowsNumber: 0,
     });
+
+    const filteredLayers = computed(() => {
+      const allLayers = props.propsLocation.mapLayers || [];
+      const keyword = layerFilter.value.toLowerCase();
+      return allLayers.filter(layer => {
+        return (
+          (layer.name && layer.name.toLowerCase().includes(keyword)) ||
+          (layer.url && layer.url.toLowerCase().includes(keyword))
+        );
+      });
+    });
+
     const getLayerRows = async () => {
       const response = await getLayerByLocation({
         locationId: props.propsLocation.id,
@@ -196,9 +198,11 @@ export default defineComponent({
         Object.assign(props.propsLocation, { ...props.propsLocation, mapLayers: response.data });
       }
     };
+
     const geoServerUrl = ({ url, workspace }) => {
       return `${process.env.GEO_SERVER_URL}/${workspace}/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=${url}&maxFeatures=52000&outputFormat=application%2Fjson`;
     };
+
     const onDeleteLayer = async (row) => {
       const resolve = () => {
         const index = props?.propsLocation?.mapLayers?.findIndex((f) => f.id === row.id)
@@ -208,6 +212,7 @@ export default defineComponent({
       }
       await deleteMapLayer(row, resolve)
     };
+
     const scrollTable = ref(null);
     const currentPopupRef = ref(null);
     const showPopup = (ref) => {
@@ -249,11 +254,13 @@ export default defineComponent({
       onDeleteLayer,
       currentPopupRef,
       showPopup,
-      LAYER_TYPE: LAYER_TYPE,
+      LAYER_TYPE,
+      filteredLayers,
     };
   },
 });
 </script>
+
 <style lang="scss" scoped>
 .tableLayerClass {
   ::-webkit-scrollbar {
